@@ -43,7 +43,51 @@
       Visualize on a Google Map plugin all the users (using lat & lng)
     -->
   </head>
-  <body class="text-center">
+  <body class="text-center container">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <button class="btn btn-outline-secondary" type="button" onclick="userSelection()">Button</button>
+      </div>
+      <select
+        class="custom-select"
+        id="inputGroupSelect03"
+        aria-label="Example select with button addon"
+      >
+        <option selected>Choose...</option>
+        <option value="Name">Name</option>
+        <option value="Username">Username</option>
+        <option value="Email">Email</option>
+      </select>
+    </div>
+    
+        <div class="form-group">
+          
+          <input
+          type="text"
+            class="form-control"
+            id="userSearchForm"
+            aria-describedby="emailHelp"
+          />
+          <small id="emailHelp" class="form-text text-muted"
+            >We'll never share your details with anyone else.</small
+          >
+        </div>
+        
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+          </tr>
+        </thead>
+        <tbody class="user-info">
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-outline-primary" onclick="sortName()">Sort</button>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
