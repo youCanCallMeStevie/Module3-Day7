@@ -22,7 +22,7 @@ tableOnLoad = async () => {
       htmlString +
       `<tr> 
     <th scope="row">${user.id}</th>
-    <td>${user.name}</td>
+    <td><a href="details.html?user=${user.id}">${user.name}</a></td>
     <td>${user.username}</td>
     <td>${user.email}</td>
     <td>${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode}</td>
@@ -40,7 +40,7 @@ filteredTable = (users) => {
           htmlString +
           `<tr> 
         <th scope="row">${user.id}</th>
-        <td>${user.name}</td>
+        <td><a href="details.html?user=${user.id}">${user.name}</a></td>
         <td>${user.username}</td>
         <td>${user.email}</td>
         <td>${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode}</td>
