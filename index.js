@@ -18,6 +18,7 @@ tableOnLoad = async () => {
     let htmlString = "";
   const table = document.querySelector(".user-info");
   users.forEach((user) => {
+    delete user.address.geo
     htmlString =
       htmlString +
       `<tr> 
@@ -25,7 +26,7 @@ tableOnLoad = async () => {
     <td><a href="details.html?user=${user.id}">${user.name}</a></td>
     <td>${user.username}</td>
     <td>${user.email}</td>
-    <td>${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode}</td>
+    <td>${Object.values(user.address).join(" ")}</td>
     </tr>`;
   });
   table.innerHTML = htmlString;
@@ -36,19 +37,21 @@ filteredTable = (users) => {
     table.innerHTML=""
     let htmlString =""
     users.forEach((user) => {
-        htmlString =
+       delete user.address.geo
+        htmlString = 
           htmlString +
           `<tr> 
         <th scope="row">${user.id}</th>
         <td><a href="details.html?user=${user.id}">${user.name}</a></td>
         <td>${user.username}</td>
         <td>${user.email}</td>
-        <td>${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode}</td>
+        <td>${Object.values(user.address).join(" ")}</td>
         </tr>`;
       });
       table.innerHTML = htmlString;
 }
 
+//<td>${Object.value}
 /* <td>${{...user.address}}</td> */
 
 const input = document.querySelector("#userSearchForm");

@@ -45,15 +45,13 @@
   </head>
   <body class="text-center container">
     <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <button class="btn btn-outline-secondary" type="button" onclick="userSelection()">Button</button>
-      </div>
+      
       <select
         class="custom-select"
         id="inputGroupSelect03"
         aria-label="Example select with button addon"
       >
-        <option selected>Choose...</option>
+        <option selected>Choose how to search...</option>
         <option value="Name">Name</option>
         <option value="Username">Username</option>
         <option value="Email">Email</option>
@@ -67,7 +65,7 @@
             class="form-control"
             id="userSearchForm"
             aria-describedby="emailHelp"
-          />
+          /><button class="btn btn-outline-secondary prepend" type="button" onclick="userSelection()">Search</button>
           <small id="emailHelp" class="form-text text-muted"
             >We'll never share your details with anyone else.</small
           >
