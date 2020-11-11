@@ -52,14 +52,13 @@
 
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("user");
-
       window.onload = () => {
         filterUserID();
       };
 
       filterUserID = async () => {
         const users = await fetchData();
-        let result = users.filter((user) => user.id == id);
+        let result = users.filter((user) => user.id === parseInt(id));
         let htmlString = "";
         const table = document.querySelector(".user-info");
 

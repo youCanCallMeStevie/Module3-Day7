@@ -17,20 +17,31 @@ tableOnLoad = async () => {
     console.log(users);
     let htmlString = "";
   const table = document.querySelector(".user-info");
-  users.forEach((user) => {
-    delete user.address.geo
-    htmlString =
-      htmlString +
-      `<tr> 
-    <th scope="row">${user.id}</th>
-    <td><a href="details.html?user=${user.id}">${user.name}</a></td>
-    <td>${user.username}</td>
-    <td>${user.email}</td>
-    <td>${Object.values(user.address).join(" ")}</td>
-    </tr>`;
-  });
-  table.innerHTML = htmlString;
-};
+table.innerHTML = users.map(user => {
+  delete user.address.geo
+  return `<tr> 
+  <th scope="row">${user.id}</th>
+  <td><a href="details.html?user=${user.id}">${user.name}</a></td>
+  <td>${user.username}</td>
+  <td>${user.email}</td>
+  <td>${Object.values(user.address).join(" ")}</td>
+  </tr>`}
+  ).join('')
+
+//   users.forEach((user) => {
+    // delete user.address.geo
+//     htmlString =
+//       htmlString +
+    //   `<tr> 
+    // <th scope="row">${user.id}</th>
+    // <td><a href="details.html?user=${user.id}">${user.name}</a></td>
+    // <td>${user.username}</td>
+    // <td>${user.email}</td>
+    // <td>${Object.values(user.address).join(" ")}</td>
+    // </tr>`;
+//   });
+//   table.innerHTML = htmlString;
+ };
 
 filteredTable = (users) => {
     const table = document.querySelector(".user-info");
