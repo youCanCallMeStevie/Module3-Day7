@@ -9,63 +9,62 @@ fetchData = async () => {
 };
 
 window.onload = () => {
-   tableOnLoad();
+  tableOnLoad();
 };
 
 tableOnLoad = async () => {
-    const users = await fetchData();
-    console.log(users);
-    let htmlString = "";
+  const users = await fetchData();
+  console.log(users);
+  let htmlString = "";
   const table = document.querySelector(".user-info");
-table.innerHTML = users.map(user => {
-  delete user.address.geo
-  return `<tr> 
-  <th scope="row">${user.id}</th>
-  <td><a href="details.html?user=${user.id}">${user.name}</a></td>
-  <td>${user.username}</td>
-  <td>${user.email}</td>
-  <td>${Object.values(user.address).join(" ")}</td>
-  </tr>`}
-  ).join('')
+  // table.innerHTML = users.map(user => {
+  //   delete user.address.geo
+  //   return `<tr>
+  //   <th scope="row">${user.id}</th>
+  //   <td><a href="details.html?user=${user.id}">${user.name}</a></td>
+  //   <td>${user.username}</td>
+  //   <td>${user.email}</td>
+  //   <td>${Object.values(user.address).join(" ")}</td>
+  //   </tr>`}
+  //   ).join('')
+  //   initMap(users);
+  users.forEach((user) => {
+    htmlString =
+      htmlString +
+      `<tr> 
+    <th scope="row">${user.id}</th>
+    <td><a href="details.html?user=${user.id}">${user.name}</a></td>
+    <td>${user.username}</td>
+    <td>${user.email}</td>
+    <td>${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode}</td>
+    </tr>`;
+  });
+  table.innerHTML = htmlString;
   initMap(users);
 
-//   users.forEach((user) => {
-    // delete user.address.geo
-//     htmlString =
-//       htmlString +
-    //   `<tr> 
-    // <th scope="row">${user.id}</th>
-    // <td><a href="details.html?user=${user.id}">${user.name}</a></td>
-    // <td>${user.username}</td>
-    // <td>${user.email}</td>
-    // <td>${Object.values(user.address).join(" ")}</td>
-    // </tr>`;
-//   });
-//   table.innerHTML = htmlString;
- };
+};
 
 filteredTable = (users) => {
-    const table = document.querySelector(".user-info");
-    table.innerHTML=""
-    let htmlString =""
-    users.forEach((user) => {
-       delete user.address.geo
-        htmlString = 
-          htmlString +
-          `<tr> 
+  const table = document.querySelector(".user-info");
+  table.innerHTML = "";
+  let htmlString = "";
+  users.forEach((user) => {
+    delete user.address.geo;
+    htmlString =
+      htmlString +
+      `<tr> 
         <th scope="row">${user.id}</th>
         <td><a href="details.html?user=${user.id}">${user.name}</a></td>
         <td>${user.username}</td>
         <td>${user.email}</td>
         <td>${Object.values(user.address).join(" ")}</td>
         </tr>`;
-      });
-      table.innerHTML = htmlString;
-}
+  });
+  table.innerHTML = htmlString;
+};
 
 //<td>${Object.value}
 /* <td>${{...user.address}}</td> */
-
 const input = document.querySelector("#userSearchForm");
 
 filterUserName = async () => {
@@ -74,6 +73,7 @@ filterUserName = async () => {
     user.username.toLowerCase().includes(input.value.toLowerCase())
   );
   filteredTable(result);
+  initMap(result);
 };
 
 filterName = async () => {
@@ -82,6 +82,7 @@ filterName = async () => {
     user.name.toLowerCase().includes(input.value.toLowerCase())
   );
   filteredTable(result);
+  initMap(result);
 };
 
 filterEmail = async () => {
@@ -90,6 +91,7 @@ filterEmail = async () => {
     user.email.toLowerCase().includes(input.value.toLowerCase())
   );
   filteredTable(result);
+  initMap(result);
 };
 
 const userSelection = () => {
@@ -109,12 +111,6 @@ const userSelection = () => {
       console.log(`Please make a selection`);
   }
 };
-
-const sortName = () => {
-let rows = document.querySelectorAll("tbody tr")
-console.log(rows[1].childNodes[2].data)
-}
-
 let sorted = false;
 sortName = async () => {
   const users = await fetchData();
@@ -154,7 +150,7 @@ sortName = async () => {
 };
 
 // Initialize and add the map
-initMap = async (users) => {
+initMap = (users) => {
   // The location of Uluru
   const uluru = { lat: -25.344, lng: 131.036 };
   // The map, centered at Uluru
@@ -162,7 +158,6 @@ initMap = async (users) => {
     zoom: 1,
     center: uluru,
   });
-  console.log(await users);
   users.forEach((user) => {
     const pos = {
       lat: parseFloat(user.address.geo.lat),

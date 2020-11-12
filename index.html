@@ -42,6 +42,12 @@
       EXTRA)
       Visualize on a Google Map plugin all the users (using lat & lng)
     -->
+    <!-- Google Maps -->
+
+    <script
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAefU9wHBlS1ZdiLtB1QHwrkwK-tw1XobQ&callback=initMap"
+    ></script>
 
     <style>
       #map {
@@ -54,7 +60,6 @@
   </head>
   <body class="text-center container">
     <div class="input-group mb-3">
-      
       <select
         class="custom-select"
         id="inputGroupSelect03"
@@ -66,37 +71,41 @@
         <option value="Email">Email</option>
       </select>
     </div>
-    
-        <div class="form-group">
-          
-          <input
-          type="text"
-            class="form-control"
-            id="userSearchForm"
-            aria-describedby="emailHelp"
-          /><button class="btn btn-outline-secondary prepend" type="button" onclick="userSelection()">Search</button>
-          <small id="emailHelp" class="form-text text-muted"
-            >We'll never share your details with anyone else.</small
-          >
-        </div>
-        
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-            <th scope="col">Address</th>
-          </tr>
-        </thead>
-        <tbody class="user-info">
-        </tbody>
-      </table>
-      <button type="button" class="btn btn-outline-primary" onclick="sortName()">
-        Sort
+
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        id="userSearchForm"
+        aria-describedby="emailHelp"
+      /><button
+        class="btn btn-outline-secondary prepend"
+        type="button"
+        onclick="userSelection()"
+      >
+        Search
       </button>
-      <div id="map"></div>
+      <small id="emailHelp" class="form-text text-muted"
+        >We'll never share your details with anyone else.</small
+      >
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Username</th>
+          <th scope="col">Email</th>
+          <th scope="col">Address</th>
+        </tr>
+      </thead>
+      <tbody class="user-info"></tbody>
+    </table>
+    <button type="button" class="btn btn-outline-primary" onclick="sortName()">
+      Sort
+    </button>
+    <div id="map"></div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
