@@ -15,6 +15,10 @@
       integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
       crossorigin="anonymous"
     />
+    <script
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCbSgv2hL1PEkvY_E69kKRPkpcIhwDem8&callback=initMap"
+    ></script>
     <!--
       PAIR PROGRAMMING EXERCISE.
       1 DRIVER, 1 NAVIGATOR.
@@ -42,7 +46,6 @@
       EXTRA)
       Visualize on a Google Map plugin all the users (using lat & lng)
     -->
-
     <style>
       #map {
         height: 400px;
@@ -54,52 +57,59 @@
   </head>
   <body class="text-center container">
     <div class="input-group mb-3">
-      
+      <div class="input-group-prepend">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          onclick="userSelection()"
+        >
+          Button
+        </button>
+      </div>
       <select
         class="custom-select"
         id="inputGroupSelect03"
         aria-label="Example select with button addon"
       >
-        <option selected>Choose how to search...</option>
+        <option selected>Choose...</option>
         <option value="Name">Name</option>
         <option value="Username">Username</option>
         <option value="Email">Email</option>
       </select>
     </div>
-    
-        <div class="form-group">
-          
-          <input
-          type="text"
-            class="form-control"
-            id="userSearchForm"
-            aria-describedby="emailHelp"
-          /><button class="btn btn-outline-secondary prepend" type="button" onclick="userSelection()">Search</button>
-          <small id="emailHelp" class="form-text text-muted"
-            >We'll never share your details with anyone else.</small
-          >
-        </div>
-        
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-            <th scope="col">Address</th>
-          </tr>
-        </thead>
-        <tbody class="user-info">
-        </tbody>
-      </table>
-      <button type="button" class="btn btn-outline-primary" onclick="sortName()">
-        Sort
-      </button>
-      <div id="map"></div>
+
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        id="userSearchForm"
+        aria-describedby="emailHelp"
+      />
+      <small id="emailHelp" class="form-text text-muted"
+        >We'll never share your details with anyone else.</small
+      >
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Username</th>
+          <th scope="col">Email</th>
+          <th scope="col">Address</th>
+        </tr>
+      </thead>
+      <tbody class="user-info"></tbody>
+    </table>
+    <button type="button" class="btn btn-outline-primary" onclick="sortName()">
+      Sort
+    </button>
+    <div id="map"></div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
