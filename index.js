@@ -8,48 +8,44 @@ fetchData = async () => {
   } catch (error) {}
 };
 
-window.onload = () => {
-  tableOnLoad();
+window.onload = async () => {
+ await tableOnLoad();
 };
 
 tableOnLoad = async () => {
   const users = await fetchData();
-  console.log(users);
-  let htmlString = "";
-  const table = document.querySelector(".user-info");
-  // table.innerHTML = users.map(user => {
-  //   delete user.address.geo
-  //   return `<tr>
-  //   <th scope="row">${user.id}</th>
-  //   <td><a href="details.html?user=${user.id}">${user.name}</a></td>
-  //   <td>${user.username}</td>
-  //   <td>${user.email}</td>
-  //   <td>${Object.values(user.address).join(" ")}</td>
-  //   </tr>`}
-  //   ).join('')
-  //   initMap(users);
-  users.forEach((user) => {
-    htmlString =
-      htmlString +
-      `<tr> 
-    <th scope="row">${user.id}</th>
-    <td><a href="details.html?user=${user.id}">${user.name}</a></td>
-    <td>${user.username}</td>
-    <td>${user.email}</td>
-    <td>${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode}</td>
-    </tr>`;
-  });
-  table.innerHTML = htmlString;
-  initMap(users);
-
-};
+    let htmlString = "";
+    const table = document.querySelector(".user-info");
+    users.forEach((user) => {
+      htmlString =
+        htmlString +
+        `<tr> 
+        <th scope="row">${user.id}</th>
+        <td><a href="details.html?user=${user.id}">${user.name}</a></td>
+        <td>${user.username}</td>
+        <td>${user.email}</td>
+        <td>${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode}</td>
+        </tr>`;
+    });
+    table.innerHTML = htmlString; 
+    // table.innerHTML = users.map(user => {
+    //   delete user.address.geo
+    //   return `<tr>
+    //   <th scope="row">${user.id}</th>
+    //   <td><a href="details.html?user=${user.id}">${user.name}</a></td>
+    //   <td>${user.username}</td>
+    //   <td>${user.email}</td>
+    //   <td>${Object.values(user.address).join(" ")}</td>
+    //   </tr>`}
+    //   ).join('')
+    //   initMap(users);
+  };
 
 filteredTable = (users) => {
   const table = document.querySelector(".user-info");
   table.innerHTML = "";
   let htmlString = "";
   users.forEach((user) => {
-    delete user.address.geo;
     htmlString =
       htmlString +
       `<tr> 
@@ -57,7 +53,7 @@ filteredTable = (users) => {
         <td><a href="details.html?user=${user.id}">${user.name}</a></td>
         <td>${user.username}</td>
         <td>${user.email}</td>
-        <td>${Object.values(user.address).join(" ")}</td>
+        <td>${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode}</td>
         </tr>`;
   });
   table.innerHTML = htmlString;
@@ -83,6 +79,7 @@ filterName = async () => {
   );
   filteredTable(result);
   initMap(result);
+  console.log(result)
 };
 
 filterEmail = async () => {
@@ -149,30 +146,43 @@ sortName = async () => {
   filteredTable(users);
 };
 
-// Initialize and add the map
-initMap = (users) => {
+//Initialize and add the map
+initMap = async (user) => {
   // The location of Uluru
-  const uluru = { lat: -25.344, lng: 131.036 };
-  // The map, centered at Uluru
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 1,
-    center: uluru,
-  });
-  users.forEach((user) => {
-    const pos = {
-      lat: parseFloat(user.address.geo.lat),
-      lng: parseFloat(user.address.geo.lng),
-    };
-    const marker = new google.maps.Marker({
-      position: pos,
-      map: map,
-      title: user.name,
-    });
-  });
+  try {
+  let response = await fetch(`https://jsonplaceholder.typicode.com/users`, {
+ method: "GET",
+      });
+      if(response.ok) {
+        let users = await response.json();
+        console.log(users);
+        const uluru = { lat: -25.344, lng: 131.036 };
+        // The map, centered at Uluru
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 1,
+          center: uluru,
+        });
+        users.map(user=>user.name)
+        users.forEach((user) => {
+          const pos = {
+            lat: parseFloat(user.address.geo.lat),
+            lng: parseFloat(user.address.geo.lng),
+          };
+          const marker = new google.maps.Marker({
+            position: pos,
+            map: map,
+            title: user.name,
+          });
+        });
+      
+        // The marker, positioned at Uluru
+        const marker = new google.maps.Marker({
+          position: uluru,
+          map: map,
+        });
+    }} catch(error) {
+         console.log(error)
+      }
 
-  // // The marker, positioned at Uluru
-  // const marker = new google.maps.Marker({
-  //   position: uluru,
-  //   map: map,
-  // });
+
 };
